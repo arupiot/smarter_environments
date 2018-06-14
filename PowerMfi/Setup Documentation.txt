@@ -1,0 +1,68 @@
+All the codes are in '/home/pi/mPower'
+
+
+Change working directory so python can find all the scripts. 
+
+add this to mPower.py:
+
+import os
+os.chdir('/home/pi/mPower')
+
+
+With this change, mPower.py can be called from any directory with "python /home/pi/mPower/mPower.py"
+Without this, we need to cd to '/home/pi/mPower' first and then run mPower.py
+
+___________
+change mPower.py to executable
+
+sudo chmod +x mPower.py
+
+____________
+
+
+create a service:
+
+More info on: http://www.diegoacuna.me/how-to-run-a-script-as-a-service-in-raspberry-pi-raspbian-jessie/
+
+
+in /lib/systemd/system, create mPower.service
+
+sudo nano /lib/systemd/system/mPower.service
+
+Then put the following in the script:
+
+________________
+
+[Unit]
+Description = mPower
+After = multi-user.target
+
+[Service]
+Type = simple
+ExecStart =/usr/bin/python /home/pi/mPower/mPower.py
+Restart = on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+_________________
+
+Then, on terminal:
+
+sudo chmod 644 /lib/systemd/system/mPower.service
+chmod +x /home/pi/mPower/mPower.py
+sudo systemctl daemon-reload
+sudo systemctl enable mPower.service
+sudo systemctl start mPower.service
+
+Once this is done, it will run the controller.py script on startup.
+
+________________
+To check status:
+
+sudo systemctl status mPower.service
+
+
+
+
+
