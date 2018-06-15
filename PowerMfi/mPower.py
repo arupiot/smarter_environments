@@ -10,7 +10,7 @@ from time import sleep
 import json
 from influxdb import InfluxDBClient
 
-
+# the folder location where this code is located - for Raspberry pi or other linux based OS
 os.chdir('/home/pi/mPower/')
 
 # class definition for mPower
@@ -20,12 +20,11 @@ class mPower:
     #AIROS_SESSIONID - 32 random digits
     #IP - ip address of mPower.
     def __init__(self):
-        self.AIROS_SESSIONID = '32 digits'
-        self.IP = 'IP'
+        self.AIROS_SESSIONID = '32 digits random number'
+        self.IP = 'IP address'
         self.username = 'ubnt'
         self.password = 'ubnt'
 		
-
     def login(self):
         cookies = {
             'AIROS_SESSIONID': self.AIROS_SESSIONID,
@@ -36,15 +35,24 @@ class mPower:
             ('password', self.password),
         ]
 
-        response = requests.post('http://'+self.IP+'/login.cgi', cookies=cookies, data=data)
-        return response
+        try:
+            response = requests.post('http://'+self.IP+'/login.cgi', cookies=cookies, data=data)
+            return response
+        except Exception as e:
+            print("Error Reading from mPower")
+            print(e)
 		
-	def logout(self):
+		
+    def logout(self):
 		cookies = {
             'AIROS_SESSIONID': self.AIROS_SESSIONID,
         }
-		response = requests.post('http://'+self.IP+'/logout.cgi', cookies=cookies)
-
+		try:
+            response = requests.post('http://'+self.IP+'/logout.cgi', cookies=cookies)
+            return response
+        except Exception as e:
+            print("Error Reading from mPower")
+            print(e)
 
     def query(self):
         cookies = {
@@ -113,26 +121,30 @@ if __name__ == "__main__":
     passwd = "password"
     db = "iotdesks"
     ssl = False
-    devID = "c1f69ba1"
+    devID = "device_ID"
     measurementName = 'Power_Consumption_Watts'
     client = InfluxDBClient(host, port, user, passwd, db)
-
+	delay = 4.9 # delay between measurements in seconds
+	
     mPowerObj = mPower()
     mPowerObj.login()
 
     while True:
-	
-		try:
-			queryResult = mPowerObj.query()
-			if queryResult is not None:
-				print queryResult.text
-				parseAndWriteResult(queryResult, devID, measurementName,client)
-				sleep(4.9)
-			else:
-				mPowerObj.login()
-				print "New connection started with mPower"
-		except Exception as e:
-			print ("Error connecting to mPOwer")
-			print e
-			mPowerObj.logout()
-			
+
+        try:
+            queryResult = mPowerObj.query()
+            if queryResult is not None:
+                print queryResult.text
+                parseAndWriteResult(queryResult, devID, measurementName,client)
+                sleep(delay)
+            else:
+                mPowerObj.logout()
+                sleep(delay)
+                mPowerObj.login()
+                print "New connection started with mPower"
+        except Exception as e:
+            print ("Error connecting to mPOwer")
+            print e
+            mPowerObj.logout()
+            sleep(delay)
+            mPowerObj.login()
