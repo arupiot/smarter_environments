@@ -2,7 +2,7 @@
 My works with Ashrant Aryal at Innovation in Integrated Informatics (i-LAB)
 
 
-#Occupancy Prediction and Profiling
+# Occupancy Prediction and Profiling
 - Predicts the occupancy of the person in the desk based on motion sensor data
 	- person present in the desk
 	- person not present in the desk
@@ -10,7 +10,7 @@ My works with Ashrant Aryal at Innovation in Integrated Informatics (i-LAB)
 	- For all weekdays and weekends separately
 	- Probability of occupancy at different time of day
 
-#Laptop Usage Prediction and Profiling
+# Laptop Usage Prediction and Profiling
 - Predicts the laptop usage by a person based on power consumption data 
 	- laptop switched OFF
 	- laptop in hibernation/standby mode
