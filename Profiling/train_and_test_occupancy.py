@@ -51,10 +51,10 @@ def train_from_db(iotdesks_client): # --  Train Model using database -------
 
 ### First Block -- Database Details -----
 
-host = "10.136.31.229"
+host = ""
 port = "8086"
-user = "admin"
-passwd = "EwNQPcDkPnQ29LWr"
+user = ""
+passwd = ""
 db = "iotdesks"
 ssl = False
 
