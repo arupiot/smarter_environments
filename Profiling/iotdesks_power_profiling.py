@@ -77,7 +77,7 @@ class iotdesks_power_profiling:
         value_df = value_df.fillna(0)
         return time_df, value_df
 
-    def pca_model(self,value_df):
+    def return_pca_model(self,value_df):
         # Fit a PCA Model with 2 Components on Value_df dataframe
         n_components = 2
         pca_model = PCA(n_components = n_components)
@@ -85,7 +85,7 @@ class iotdesks_power_profiling:
         pca_fitted_values = pca_model.transform(value_df)
         return pca_model, pca_fitted_values
     
-    def gmm_model(self, pca_fitted_values):
+    def return_gmm_model(self, pca_fitted_values):
         # Fit a GMM model with 2 clusteres
         n_components = 2
         gmm = GaussianMixture(n_components=n_components)
@@ -127,11 +127,11 @@ class iotdesks_power_profiling:
         print('### -- Done --- Feature Extraction - First Level')
 
         # PCA Model 
-        self.pca_model1, self.pca_fitted_values1 = self.pca_model(self.value_df1)
+        self.pca_model1, self.pca_fitted_values1 = self.return_pca_model(self.value_df1)
         print('### -- Done --- Principal Component Analysis - First Level')
        
         # GMM Model
-        self.gmm1, self.predicted_pca_fitted_values1 = self.gmm_model(self.pca_fitted_values1)
+        self.gmm1, self.predicted_pca_fitted_values1 = self.return_gmm_model(self.pca_fitted_values1)
         print('### -- Done --- Gaussian Mixture Model For Clustering - First Level')
         
         # Labelling
@@ -163,11 +163,11 @@ class iotdesks_power_profiling:
         print('### -- Done --- Feature Extraction - Second Level')
         
         # PCA Model -- 2
-        self.pca_model2, self.pca_fitted_values2 = self.pca_model(self.value_df2)
+        self.pca_model2, self.pca_fitted_values2 = self.return_pca_model(self.value_df2)
         print('### -- Done --- Principal Component Analysis - Second Level')
         
         # GMM Model -- 2
-        self.gmm2, self.predicted_pca_fitted_values2 = self.gmm_model(self.pca_fitted_values2)
+        self.gmm2, self.predicted_pca_fitted_values2 = self.return_gmm_model(self.pca_fitted_values2)
         print('### -- Done --- Gaussian Mixture Model For Clustering - Second Level')
        
         # Labelling -- 2
@@ -252,29 +252,6 @@ class iotdesks_power_profiling:
     def power_profiling(self):
         self.power_prediction()
         self.separate_day_wise_data()
-        self.kernel_density_estimation()     
+        self.kernel_density_estimation() 
+        plt.show()
 
-def main():    
-    ### Path and data file name
-    data_path = '/Users/abinaya/USC/Research-ilab/Abinaya/csv/'
-    #data_list = listdir(data_path)
-    
-    # Run for a single file or multiple files
-    file_name_list = ['Port16Power.csv']
-    
-    for file_name in file_name_list:
-        print('### ---------- Running for File: ',file_name)
-        data_file_path = data_path + file_name + '/' + file_name
-        df = pd.read_csv(data_file_path)
-        
-        ### Start date and End date for Occupancy profiling
-        start_date = pd.datetime(2017,02,01)
-        end_date = pd.datetime(2017,03,01)
-        
-        ### Object for the class 
-        power_prof = iotdesks_power_profiling(df, start_date, end_date)
-        power_prof.power_profiling()
-        
-
-if __name__ == "__main__":
-    main()                

@@ -75,7 +75,7 @@ class iotdesks_occupancy_profiling:
         value_df = value_df.fillna(0)
         return time_df, value_df
 
-    def pca_model(self,value_df):
+    def return_pca_model(self,value_df):
         # Fit a PCA Model with 2 Components on Value_df dataframe
         n_components = 2
         pca_model = PCA(n_components = n_components)
@@ -83,7 +83,7 @@ class iotdesks_occupancy_profiling:
         pca_fitted_values = pca_model.transform(value_df)
         return pca_model, pca_fitted_values
     
-    def gmm_model(self, pca_fitted_values):
+    def return_gmm_model(self, pca_fitted_values):
         # Fit a GMM model with 2 clusteres
         n_components = 2
         gmm = GaussianMixture(n_components=n_components)
@@ -121,15 +121,15 @@ class iotdesks_occupancy_profiling:
         print('### -- Done --- Feature Extraction')
         
         # PCA Model 
-        self.pca_model, self.pca_fitted_values = self.pca_model(self.value_df)
+        self.pca_model, self.pca_fitted_values = self.return_pca_model(self.value_df)
         print('### -- Done --- Principal Component Analysis')
         
         # GMM Model
-        self.gmm, self.predicted_pca_fitted_values = self.gmm_model(self.pca_fitted_values)
+        self.gmm, self.predicted_pca_fitted_values = self.return_gmm_model(self.pca_fitted_values)
         print('### -- Done --- Gaussian Mixture Model For Clustering')
         
         # Labelling
-        self.prediction_label = 'presence_predicted'
+        self.prediction_label = 'Occupancy_State'
         self.label_each_time_instant(self.time_df, self.predicted_pca_fitted_values ,self.prediction_label)
         print('### -- Done --- Labelling Each Time Instant')
    
@@ -168,7 +168,7 @@ class iotdesks_occupancy_profiling:
             df['hour_min'] = df['time'].map(lambda t: t.strftime('%H:%M'))
             
             # Change the dataframe to required format to fit the Kernel Density Estimate
-            df_data_tofit = df.pivot(index='date', columns='hour_min', values='presence_predicted')
+            df_data_tofit = df.pivot(index='date', columns='hour_min', values='Occupancy_State')
             df_data_tofit = df_data_tofit.fillna(0) 
             
             # Fit and get score samples
@@ -196,30 +196,6 @@ class iotdesks_occupancy_profiling:
         self.occupancy_prediction()
         self.separate_day_wise_data()
         self.kernel_density_estimation()
+        plt.show()
 
             
-          
-def main():
-    ### Path and data file name
-    data_path = '/Users/abinaya/USC/Research-ilab/Abinaya/csv/'
-    #data_list = listdir(data_path)
-    
-    # Run for a single file or multiple files
-    file_name_list = ['d1motion.csv']
-    
-    for file_name in file_name_list:
-        print('### ---------- Running for File: ',file_name)
-        data_file_path = data_path + file_name + '/' + file_name
-        df = pd.read_csv(data_file_path)
-        
-        ### Start date and End date for Occupancy profiling
-        start_date = pd.datetime(2017,02,01)
-        end_date = pd.datetime(2017,03,01)
-        
-        ### Object for the class 
-        occupancy_prof = iotdesks_occupancy_profiling(df, start_date, end_date)
-        occupancy_prof.occupancy_profiling()
-
-
-if __name__ == "__main__":
-    main()
