@@ -1,4 +1,4 @@
-#iotdesks\_occupancy\_profiling.py
+# iotdesks\_occupancy\_profiling.py
 - Contains a class for iotdesks occupancy profiling
 	- Used by train\_and\_test\_occupancy.py
 - Method: preprocess\_data():
@@ -27,7 +27,7 @@
 	- separates data with prediction based on day of week
 	- profiling - estimates probability of occupancy
 
-#train\_and\_test\_occupancy.py
+# train\_and\_test\_occupancy.py
 - Method: train\_from\_csv()
    - Train model using data from data\_path+file\_name
    - Outputs occupancy prediction on trained data and profiling for different days of week
@@ -45,7 +45,7 @@
 	- Outputs occupancy prediction for the test data
 	- Can run this block in a loop to predict 5 minutes once by making changes while querying
    
-#iotdesks\_power\_profiling.py
+# iotdesks\_power\_profiling.py
 - Contains a class for iotdesks power profiling
 	- Used by train\_and\_test\_power.py
 - Most of the methods are similar to the ones present in iotdesks\_occupancy\_profiling.py
@@ -65,17 +65,17 @@
 	- profiling - estimates of laptop usage for three different states
 
 
-#train\_and\_test\_power.py
+# train\_and\_test\_power.py
 - Train model using data from data\_path+file\_name
 - Outputs laptop usage prediction on trained data and profiling for different days of week 
 - This code can be replicated similar to train\_and\_test\_occupancy.py, for training and testing on real-time data connected to a database
 
-#utils.py
+# utils.py
 - Contains useful methods for testing data in real time
 
-#Folder: Sample-Results
+# Folder: Sample-Results
 - Contains sample outputs of training and testing saved as CSVs
 
-#Folder: Sample-Plots
+# Folder: Sample-Plots
 - Contains sample plots of profiling
  
