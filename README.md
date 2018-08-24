@@ -1,6 +1,6 @@
 ## Life Of A Desk - Smarter Environments with ARUP
 
-By Abinaya Manimaran and Ashrant Aryal at Innovation in Integrated Informatics (i-LAB), University of Southern California
+By Abinaya Manimaran and Ashrant Aryal at Innovation in Integrated Informatics LAB - ilab, University of Southern California
 
 
 # Occupancy Prediction and Profiling
