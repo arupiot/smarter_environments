@@ -10,6 +10,7 @@ My works with Ashrant Aryal at Innovation in Integrated Informatics (i-LAB)
 	- For all weekdays and weekends separately
 	- Probability of occupancy at different time of day
 
+
 # Laptop Usage Prediction and Profiling
 - Predicts the laptop usage by a person based on power consumption data 
 	- laptop switched OFF
