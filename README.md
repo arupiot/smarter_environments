@@ -10,7 +10,7 @@ My works with Ashrant Aryal at Innovation in Integrated Informatics (i-LAB)
 	- For all weekdays and weekends separately
 	- Probability of occupancy at different time of day
 
-![alt text](https://github.com/arupiot/smarter_environments/tree/abinaya/Profiling/Helpers/Figure-1.png)
+![Screenshot](https://github.com/arupiot/smarter_environments/tree/abinaya/Profiling/Helpers/Figure-1.png)
 
 
 # Laptop Usage Prediction and Profiling
@@ -23,4 +23,4 @@ My works with Ashrant Aryal at Innovation in Integrated Informatics (i-LAB)
 	- Probability of laptop usage at different time of days
 	
 
-![alt text](https://github.com/arupiot/smarter_environments/tree/abinaya/Profiling/Helpers/Figure-2.png)
+![Screenshot](https://github.com/arupiot/smarter_environments/tree/abinaya/Profiling/Helpers/Figure-2.png)
